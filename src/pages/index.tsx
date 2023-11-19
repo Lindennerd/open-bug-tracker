@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -8,7 +9,9 @@ export default function Home() {
         <meta name="description" content="Open Bug Tracker" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main></main>
+      <div>
+        <Link href="/project/new">bring your project</Link>
+      </div>
     </>
   );
 }
