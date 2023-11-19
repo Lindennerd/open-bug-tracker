@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { SearchBar } from "./SearchBar";
 import { User } from "./User";
 
 export const Nav = () => {
@@ -9,7 +8,6 @@ export const Nav = () => {
         Open Bug Tracker
       </Link>
       <div className="flex gap-2">
-        <SearchBar />
         <User />
       </div>
     </nav>
