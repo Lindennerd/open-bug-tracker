@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Link from "next/link";
+import { ProjectList } from "~/components/project/List";
 
 export default function Home() {
   return (
@@ -9,8 +9,8 @@ export default function Home() {
         <meta name="description" content="Open Bug Tracker" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <Link href="/project/new">bring your project</Link>
+      <div className="flex w-full flex-col">
+        <ProjectList />
       </div>
     </>
   );

@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 
 export default function ProjectDetailsPage() {
   const params = useParams<{ id: string }>();
-  const [project, projectQuery] = api.project.getProjectById.useSuspenseQuery(
+  const { data: project } = api.project.getProjectById.useQuery(
     Number(params.id ?? 0),
   );
 

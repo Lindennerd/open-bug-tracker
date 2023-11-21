@@ -4,18 +4,24 @@ import { type AddProjectInput } from "~/server/api/routers/project/procedures/ad
 import { api } from "~/utils/api";
 import { Button, Editor, Input } from "../base";
 
+export type ProjectMutation = AddProjectInput & { id?: number };
+
 export type ProjectFormProps = {
+  project?: ProjectMutation;
   onSubmitted?: (project: Project) => void;
 };
 
-const defaultValue: AddProjectInput = {
+const defaultValue: ProjectMutation & { id?: number } = {
+  id: undefined,
   name: "",
   repository: "",
   description: "",
 };
 export const ProjectForm = (props: ProjectFormProps) => {
   const [loading, setLoading] = useState(false);
-  const [project, setProject] = useState<AddProjectInput>(defaultValue);
+  const [project, setProject] = useState<ProjectMutation>(
+    props.project ?? defaultValue,
+  );
   const { mutate: addProjectMutation } = api.project.addProject.useMutation({
     onSuccess: (data) => {
       setLoading(false);
@@ -23,11 +29,29 @@ export const ProjectForm = (props: ProjectFormProps) => {
       props.onSubmitted?.(data);
     },
   });
+
+  const { mutate: editProjectMutation } = api.project.editProject.useMutation({
+    onSuccess: (data) => {
+      setLoading(false);
+      handleReset();
+      props.onSubmitted?.(data);
+    },
+  });
+
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    if (project.id) {
+      editProjectMutation({
+        id: project.id,
+        name: project.name,
+        repository: project.repository,
+        description: project.description,
+      });
+      return;
+    }
     addProjectMutation(project);
   };
 
@@ -62,7 +86,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
       />
       <div className="mt-2 flex gap-1">
         <Button type="submit" variant="success" disabled={loading}>
-          {loading ? "Creating..." : "Create Project"}
+          {loading ? "Saving..." : "Save Project"}
         </Button>
         <Button type="button" onClick={handleReset}>
           Clear

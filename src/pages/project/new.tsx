@@ -12,7 +12,7 @@ export default function NewProjectPage() {
         <title>New Project</title>
       </Head>
       <ProjectForm
-        onSubmitted={(project) => router.push(`/project/${project.id}`)}
+        onSubmitted={(project) => router.push(`/project/${project.id}/details`)}
       />
     </>
   );

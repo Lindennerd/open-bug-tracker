@@ -3,7 +3,10 @@ import { type ButtonHTMLAttributes, type DetailedHTMLProps } from "react";
 type ButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
-> & { variant?: "primary" | "secondary" | "danger" | "warning" | "success" };
+> & {
+  variant?: "primary" | "secondary" | "danger" | "warning" | "success";
+  disabled?: boolean;
+};
 
 export const Button = (props: ButtonProps) => {
   const variantBg = () => {
@@ -25,7 +28,11 @@ export const Button = (props: ButtonProps) => {
 
   return (
     <button
-      className={`rounded-md border border-gray-600  px-2 py-1 text-white hover:border-gray-500 ${variantBg()}`}
+      className={
+        props.disabled
+          ? "w-full cursor-not-allowed rounded-md border  border-gray-600 p-1 opacity-50"
+          : `w-full rounded-md border border-gray-600  px-2 py-1 text-white hover:border-gray-500 ${variantBg()}`
+      }
       {...props}
     ></button>
   );

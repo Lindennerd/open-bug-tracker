@@ -6,8 +6,8 @@ export const User = () => {
 
   if (status === "authenticated" && session)
     return (
-      <button className="flex gap-2 rounded p-1 text-white hover:bg-purple-800">
-        <span className="mt-2">{`Hello ${session.user.name}`}</span>
+      <button className="flex items-center gap-2 rounded p-1 hover:bg-gray-700">
+        <span>{`Hello ${session.user.name}`}</span>
         <Image
           className="rounded-full"
           src={session.user.image ?? ""}
@@ -20,7 +20,7 @@ export const User = () => {
   else
     return (
       <button
-        className="rounded p-2 text-white hover:bg-purple-800"
+        className="rounded p-2 text-white hover:bg-gray-700"
         onClick={() => signIn("auth0")}
       >
         LogIn
