@@ -30,7 +30,7 @@ export const Input = (props: InputProps) => {
         required={props.required}
         onInvalid={handleInvalid}
         type={props.type ?? "text"}
-        className={`rounded border border-gray-500 bg-gray-800 px-2 py-1 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 ${props.className}`}
+        className={`rounded border border-gray-500 bg-gray-800 px-2 py-1 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 `}
         {...props}
       />
       {errors.length > 0 &&

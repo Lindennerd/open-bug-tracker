@@ -6,6 +6,7 @@ type ButtonProps = DetailedHTMLProps<
 > & {
   variant?: "primary" | "secondary" | "danger" | "warning" | "success";
   disabled?: boolean;
+  full?: boolean;
 };
 
 export const Button = (props: ButtonProps) => {
@@ -30,8 +31,12 @@ export const Button = (props: ButtonProps) => {
     <button
       className={
         props.disabled
-          ? "w-full cursor-not-allowed rounded-md border  border-gray-600 p-1 opacity-50"
-          : `w-full rounded-md border border-gray-600  px-2 py-1 text-white hover:border-gray-500 ${variantBg()}`
+          ? `cursor-not-allowed rounded-md border  border-gray-600 p-1 opacity-50 ${
+              props.full ? "w-full" : ""
+            }`
+          : `rounded-md border border-gray-600  px-2 py-1 text-white hover:border-gray-500 ${
+              props.full ? "w-full" : ""
+            } ${variantBg()}`
       }
       {...props}
     ></button>

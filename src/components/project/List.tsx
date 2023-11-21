@@ -6,6 +6,7 @@ import { Button } from "../base";
 import { Check } from "../base/Check";
 import LoadingSkeleton from "../base/LoadingSkeleton";
 import { ProjectListItem } from "./ProjectListItem";
+import { SearchProject } from "./SearchProject";
 
 export type ProjectListProps = {
   name?: string;
@@ -23,12 +24,10 @@ export const ProjectList = () => {
     data: pages,
     isLoading,
     isFetchingNextPage,
-    isFetching,
     hasNextPage,
     hasPreviousPage,
     fetchPreviousPage,
     fetchNextPage,
-    error,
   } = api.project.getProjects.useInfiniteQuery(
     {
       myProjects: filter.myProjects,
@@ -43,23 +42,35 @@ export const ProjectList = () => {
       {isLoading && <LoadingSkeleton />}
       {pages?.pages.map((projectsPage, index) => (
         <div key={index} className="flex flex-col gap-2">
-          <Check
-            label={filter.myProjects ? "My Projects" : "All Projects"}
-            checked={filter.myProjects}
-            onChecked={(checked) =>
-              setFilter({ ...filter, myProjects: checked })
-            }
-          />
+          <div className="flex items-center justify-between gap-4">
+            <Check
+              label={filter.myProjects ? "My Projects" : "All Projects"}
+              checked={filter.myProjects}
+              onChecked={(checked) =>
+                setFilter({ ...filter, myProjects: checked })
+              }
+            />
+
+            <SearchProject
+              currentSearch={filter.name}
+              onSearch={(name) => setFilter({ ...filter, name })}
+            />
+          </div>
           {projectsPage.projects.map((project) => (
             <ProjectListItem key={project.id} project={project} />
           ))}
         </div>
       ))}
       <div className="flex w-full gap-4 py-2">
-        <Button disabled={!hasPreviousPage} onClick={() => fetchPreviousPage()}>
+        <Button
+          full
+          disabled={!hasPreviousPage}
+          onClick={() => fetchPreviousPage()}
+        >
           Previous
         </Button>
         <Button
+          full
           disabled={!hasNextPage || isFetchingNextPage}
           onClick={() => fetchNextPage()}
         >
